@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
     private RelativeLayout mBodyLayout;
     private int mBodyDefaultMarginTop;
     private EditText mTopicEdit;
+    private EditText mTopicEditUser;
     private TextView mStartBtn;
     private ImageView mLogo;
 
@@ -85,6 +86,24 @@ public class MainActivity extends BaseActivity {
         public void afterTextChanged(Editable editable) {
             mStartBtn.setEnabled(!TextUtils.isEmpty(editable));
         }
+    };
+
+    private TextWatcher mTextWatcherUser = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Do nothing
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            // Do nothing
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            //mStartBtn.setEnabled(!TextUtils.isEmpty(editable));
+       }
+        //If only update user, CANNOT set the button enabled. --- only Channe; name is mandatory. The user name is added only for Chat.
     };
 
     private ViewTreeObserver.OnGlobalLayoutListener mLayoutObserverListener =
@@ -137,6 +156,9 @@ public class MainActivity extends BaseActivity {
 
         mTopicEdit = findViewById(R.id.topic_edit);
         mTopicEdit.addTextChangedListener(mTextWatcher);
+
+        mTopicEditUser = findViewById(R.id.topic_edit_user);
+        mTopicEditUser.addTextChangedListener(mTextWatcherUser);
 
         mStartBtn = findViewById(R.id.start_broadcast_button);
         if (TextUtils.isEmpty(mTopicEdit.getText())) mStartBtn.setEnabled(false);
@@ -244,6 +266,8 @@ public class MainActivity extends BaseActivity {
         Intent intent = new Intent(MainActivity.this, RoleActivity.class);
         String room = mTopicEdit.getText().toString();
         config().setChannelName(room);
+        String userId = mTopicEditUser.getText().toString();
+        config().setUserId(userId);
         startActivity(intent);
     }
 

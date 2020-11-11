@@ -7,6 +7,7 @@ public class EngineConfig {
     // private int mUid = DEFAULT_UID;
 
     private String mChannelName;
+    private String mUserId;
     private boolean mShowVideoStats;
     private int mDimenIndex = Constants.DEFAULT_PROFILE_IDX;
     private int mMirrorLocalIndex;
@@ -25,9 +26,16 @@ public class EngineConfig {
     public String getChannelName() {
         return mChannelName;
     }
+    public String getmUserId() {
+        return mUserId;
+    }
 
     public void setChannelName(String mChannel) {
         this.mChannelName = mChannel;
+    }
+
+    public void setUserId(String mUserId) {
+        this.mUserId = mUserId;
     }
 
     public boolean ifShowVideoStats() {

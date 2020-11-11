@@ -1,5 +1,7 @@
 package io.agora.openlive.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import io.agora.openlive.ui.VideoGridContainer;
 import io.agora.rtc.Constants;
 import io.agora.rtc.IRtcEngineEventHandler;
 import io.agora.rtc.video.VideoEncoderConfiguration;
+import io.agora.utils.MessageUtil;
 
 public class LiveActivity extends RtcBaseActivity {
     private static final String TAG = LiveActivity.class.getSimpleName();
@@ -29,6 +32,10 @@ public class LiveActivity extends RtcBaseActivity {
     private ImageView mMuteVideoBtn;
 
     private VideoEncoderConfiguration.VideoDimensions mVideoDimension;
+
+    //vin
+    private static final int CHAT_REQUEST_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,6 +228,11 @@ public class LiveActivity extends RtcBaseActivity {
         finish();
     }
 
+
+
+
+
+
     public void onSwitchCameraClicked(View view) {
         rtcEngine().switchCamera();
     }
@@ -253,5 +265,35 @@ public class LiveActivity extends RtcBaseActivity {
             startBroadcast();
         }
         view.setActivated(!view.isActivated());
+    }
+
+//    private void gotoLiveActivity(int role) {
+//        Intent intent = new Intent(getIntent());
+//        intent.putExtra(io.agora.openlive.Constants.KEY_CLIENT_ROLE, role);
+//        intent.setClass(getApplicationContext(), LiveActivity.class);
+//        startActivity(intent);
+//    }
+
+    public void jumpToMessageActivity(View view) {
+        Intent intent = new Intent(getIntent());
+        intent.putExtra(MessageUtil.INTENT_EXTRA_IS_PEER_MODE, false); //Vin, false nothing showup
+        intent.putExtra(MessageUtil.INTENT_EXTRA_TARGET_NAME, config().getChannelName());
+        intent.putExtra(MessageUtil.INTENT_EXTRA_USER_ID, config().getmUserId());
+        intent.setClass(getApplicationContext(), MessageActivity.class);
+        startActivityForResult(intent, CHAT_REQUEST_CODE);
+    }
+
+    public void onClickFinish(View v) {
+        finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHAT_REQUEST_CODE) {
+            if (resultCode == MessageUtil.ACTIVITY_RESULT_CONN_ABORTED) {
+                finish();
+            }
+        }
     }
 }

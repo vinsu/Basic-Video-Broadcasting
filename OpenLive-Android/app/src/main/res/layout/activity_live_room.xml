@@ -26,6 +26,22 @@
             android:scaleType="centerCrop"
             android:background="@drawable/rounded_bg_half_transparent"
             android:onClick="onLeaveClicked"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="@dimen/live_leave_btn_size"
+            android:layout_height="@dimen/live_leave_btn_size"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="@dimen/live_top_layout_margin"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/rounded_bg_half_transparent"
+            android:onClick="jumpToMessageActivity"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_tab_chat_def" />
+
         <RelativeLayout
             android:id="@+id/live_name_space_layout"
             android:layout_width="@dimen/live_name_board_width"
